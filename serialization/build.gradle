@@ -1,0 +1,31 @@
+/**
+ * Common configuration for all Java libraries: basic properties, checkstyle and JVM tests.
+ */
+
+apply plugin: 'java'
+
+ext.compileSdkVersion = 25
+ext.buildToolsVersion = '25.0.0'
+ext.minSdkVersion = 17
+ext.targetSdkVersion = 25
+
+//apply from: "${project.rootDir}/config/gradle-common/robolectric-test-config.gradle"
+
+sourceCompatibility = JavaVersion.VERSION_1_7
+targetCompatibility = JavaVersion.VERSION_1_7
+
+repositories {
+//    project.mavenLocalIfDefined(it)
+    maven { url "https://artifactory-ci.twitter.biz/java-virtual" }
+}
+
+dependencies {
+    compile 'org.jetbrains:annotations:13.0'
+    compile 'io.reactivex:rxjava:1.3.0'
+    compile 'javax.inject:javax.inject:1'
+    testCompile 'org.assertj:assertj-core:2.6.0'
+    testCompile 'junit:junit:4.12'
+}
+
+
+
