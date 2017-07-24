@@ -1,9 +1,9 @@
-Twitter Cereal
+Twitter Serial
 ==============
 
 Overview
 --------
-Twitter Cereal is a custom serialization implementation that's intended to improve performance and increase
+Twitter Serial is a custom serialization implementation that's intended to improve performance and increase
 developer visibility into and control over an object's serialization.
 
 This framework uses Serializers to explicitly define how a class should be serialized. Some of the major advantages of this
