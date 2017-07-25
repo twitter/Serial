@@ -1,8 +1,25 @@
-.. image:: https://travis-ci.org/twitter/Serial.svg?branch=master
+|badge1| |badge2| |badge3|
+
+.. |badge1| image:: https://travis-ci.org/twitter/Serial.svg?branch=master
     :target: https://travis-ci.org/twitter/Serial
+
+.. |badge2| image:: https://img.shields.io/bintray/v/amandeepg/Serial/serial.svg
+
+.. |badge3| image:: https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat
+    :target: https://raw.githubusercontent.com/twitter/Serial/master/LICENSE.txt
 
 Twitter Serial
 ==============
+
+Download
+--------
+Grab the latest version via Gradle:
+
+.. code-block:: java
+
+  dependencies {
+    compile 'com.serial:serial:0.1'
+  }
 
 Overview
 --------
