@@ -1,3 +1,6 @@
+.. image:: https://travis-ci.org/twitter/Serial.svg?branch=master
+    :target: https://travis-ci.org/twitter/Serial
+
 Twitter Serial
 ==============
 
