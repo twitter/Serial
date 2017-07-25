@@ -8,9 +8,6 @@ addons:
     packages:
       - oracle-java8-installer
 
-deploy:
-  - # deployment script goes here.
-
 notifications:
   email: false
 
