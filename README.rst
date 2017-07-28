@@ -216,7 +216,7 @@ Version numbers
 ~~~~~~~~~~~~~~~
 Another option is to increase the version number of the serializer, and define the deserialization behavior for
 older versions. To do this, pass the version number into the constructor of the ``SERIALIZER`` object, and then
-in the deserialize method you can specify what to do differenlty for previous versions.
+in the deserialize method you can specify what to do differently for previous versions.
 
 - To change the above example to use version numbers, do the following:
 
