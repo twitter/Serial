@@ -291,7 +291,7 @@ public class SerializationUtilsTests {
                         "        Object: Unknown type, v3 {\n" +
                         "            Long: 99\n" +
                         "        }\n" +
-                        "ERROR: SerializationException: " +
+                        "ERROR: com.twitter.serial.util.serialization.base.SerializationException: " +
                         "Object start with no matching object end.");
     }
 
