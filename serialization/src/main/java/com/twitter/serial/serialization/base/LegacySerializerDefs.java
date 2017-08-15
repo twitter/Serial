@@ -14,18 +14,10 @@
  * limitations under the License.
  */
 
-package com.twitter.serial.util.object;
+package com.twitter.serial.serialization.base;
 
-import com.twitter.serial.serialization.serializer.BuilderSerializer;
-
-import org.jetbrains.annotations.NotNull;
-
-/**
- * Interface for builders that can be used with the {@link BuilderSerializer} class. {@link ObjectBuilder} is an example
- * of a class that implements this.
- * @param <T> Object type to build
- */
-public interface Builder<T> {
-    @NotNull
-    T build();
+class LegacySerializerDefs {
+    // null indicators for nullable object
+    protected static final byte NULL_OBJECT = 0;
+    protected static final byte NOT_NULL_OBJECT = 1;
 }

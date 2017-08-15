@@ -40,29 +40,29 @@ approach include:
 
 Basic Structure
 ---------------
-- Instead of implementing Serializable, you must define a serializer for every object that needs to be serialized
-- read/writeObject no longer exist in the same way, you must pass in the serializer for the class type or call
-  serialize/deserialize explicitly using that object's serializer
+
+To serialize an object to a byte array, use:
+
+.. code-block:: java
+
+  final Serial serial = new Serial();
+  final byte[] serializedData = serial.toByteArray(object, ExampleObject.SERIALIZER)
+
+To deserialize from a byte array back to an object, use:
+
+.. code-block:: java
+
+  final ExampleObject object = serial.fromByteArray(ExampleObject.SERIALIZER)
+
+Defining Serializers
+--------------------
+- Instead of implementing Serializable, define a serializer for every object that needs to be serialized
 - Serializers explicitly write and read each field of the object by using read/write for primitives or recursively
   calling serializers for other objects
 - Serializers handle null objects for you, as does read/writeString; primitive read/write methods do not
 - Serializers are stateless, so they are written as static inner classes of the object and accessed as a static
   instance variable ``SERIALIZER``
 
-To serialize an object to a byte array, use:
-
-.. code-block:: java
-
-  final byte[] serializedData = SerializationUtils.toByteArray(object, ExampleObject.SERIALIZER)
-
-To deserialize from a byte array back to an object, use:
-
-.. code-block:: java
-
-  final ExampleObject object = SerializationUtils.fromByteArray(ExampleObject.SERIALIZER)
-
-Defining Serializers
---------------------
 For most classes, you can create a subclass of ``ObjectSerializer`` and implement ``serializeObject`` and
 ``deserializeObject``
 
@@ -297,7 +297,7 @@ the stream.
 
 Debugging
 ---------
-``SerializationUtils`` also contains methods to help with debugging:
+``serial`` also contains methods to help with debugging:
 
 - ``dumpSerializedData`` will create a string log of the data in the serialized byte array
 - ``validateSerializedData`` ensures that the serialized object has a valid structure (e.g. every object start header

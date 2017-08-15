@@ -14,18 +14,10 @@
  * limitations under the License.
  */
 
-package com.twitter.serial.util.object;
+package com.twitter.serial.serialization.base;
 
-import com.twitter.serial.serialization.serializer.BuilderSerializer;
-
-import org.jetbrains.annotations.NotNull;
-
-/**
- * Interface for builders that can be used with the {@link BuilderSerializer} class. {@link ObjectBuilder} is an example
- * of a class that implements this.
- * @param <T> Object type to build
- */
-public interface Builder<T> {
-    @NotNull
-    T build();
+public abstract class SerializerStream {
+    public boolean isPeekSupported() {
+        return false;
+    }
 }
