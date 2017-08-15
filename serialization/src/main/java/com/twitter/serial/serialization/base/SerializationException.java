@@ -14,18 +14,20 @@
  * limitations under the License.
  */
 
-package com.twitter.serial.util.object;
-
-import com.twitter.serial.serialization.serializer.BuilderSerializer;
+package com.twitter.serial.serialization.base;
 
 import org.jetbrains.annotations.NotNull;
 
-/**
- * Interface for builders that can be used with the {@link BuilderSerializer} class. {@link ObjectBuilder} is an example
- * of a class that implements this.
- * @param <T> Object type to build
- */
-public interface Builder<T> {
-    @NotNull
-    T build();
+import java.io.IOException;
+
+public class SerializationException extends IOException {
+    private static final long serialVersionUID = 1354673450935990055L;
+
+    public SerializationException(@NotNull String message) {
+        super(message);
+    }
+
+    public SerializationException(@NotNull String message, @NotNull Throwable cause) {
+        super(message, cause);
+    }
 }

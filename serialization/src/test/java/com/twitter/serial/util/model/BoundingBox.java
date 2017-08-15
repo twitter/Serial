@@ -18,12 +18,12 @@ package com.twitter.serial.util.model;
 
 import com.twitter.serial.util.internal.InternalSerialUtils;
 import com.twitter.serial.util.object.ObjectUtils;
-import com.twitter.serial.util.serialization.SerializationContext;
-import com.twitter.serial.util.serialization.base.SerializerInput;
-import com.twitter.serial.util.serialization.base.SerializerOutput;
-import com.twitter.serial.util.serialization.serializer.CollectionSerializers;
-import com.twitter.serial.util.serialization.serializer.ObjectSerializer;
-import com.twitter.serial.util.serialization.serializer.Serializer;
+import com.twitter.serial.serialization.SerializationContext;
+import com.twitter.serial.serialization.base.SerializerInput;
+import com.twitter.serial.serialization.base.SerializerOutput;
+import com.twitter.serial.serialization.serializer.CollectionSerializers;
+import com.twitter.serial.serialization.serializer.ObjectSerializer;
+import com.twitter.serial.serialization.serializer.Serializer;
 
 import org.jetbrains.annotations.NotNull;
 

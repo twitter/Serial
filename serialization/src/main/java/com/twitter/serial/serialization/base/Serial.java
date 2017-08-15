@@ -14,18 +14,26 @@
  * limitations under the License.
  */
 
-package com.twitter.serial.util.object;
+package com.twitter.serial.serialization.base;
 
-import com.twitter.serial.serialization.serializer.BuilderSerializer;
+import com.twitter.serial.serialization.serializer.Serializer;
 
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.io.IOException;
 
 /**
- * Interface for builders that can be used with the {@link BuilderSerializer} class. {@link ObjectBuilder} is an example
- * of a class that implements this.
- * @param <T> Object type to build
+ * A class that runs serialization and deserialization operations.
  */
-public interface Builder<T> {
+public interface Serial {
+
     @NotNull
-    T build();
+    <T> byte[] toByteArray(@Nullable T value, @NotNull Serializer<T> serializer) throws IOException;
+
+    @Nullable
+    @Contract("null, _ -> null")
+    <T> T fromByteArray(@Nullable byte[] bytes, @NotNull Serializer<T> serializer) throws IOException,
+            ClassNotFoundException;
 }
