@@ -31,8 +31,7 @@ sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
 
 repositories {
-//    project.mavenLocalIfDefined(it)
-    maven { url "https://artifactory-ci.twitter.biz/java-virtual" }
+	jcenter()
 }
 
 dependencies {
