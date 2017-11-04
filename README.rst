@@ -3,7 +3,8 @@
 .. |badge1| image:: https://travis-ci.org/twitter/Serial.svg?branch=master
     :target: https://travis-ci.org/twitter/Serial
 
-.. |badge2| image:: https://img.shields.io/bintray/v/amandeepg/Serial/serial.svg
+.. |badge2| image:: https://img.shields.io/maven-central/v/com.twitter.serial/serial.svg
+    :target: https://repo1.maven.org/maven2/com/twitter/serial/serial/
 
 .. |badge3| image:: https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat
     :target: https://raw.githubusercontent.com/twitter/Serial/master/LICENSE.txt
@@ -13,12 +14,16 @@ Twitter Serial
 
 Download
 --------
-Grab the latest version via Gradle:
+Grab the latest version via Gradle from Maven Central:
 
 .. code-block:: java
 
+  repositories {
+    mavenCentral()
+  }
+
   dependencies {
-    compile 'com.serial:serial:0.1'
+    compile 'com.serial:serial:0.1.4'
   }
 
 Overview
