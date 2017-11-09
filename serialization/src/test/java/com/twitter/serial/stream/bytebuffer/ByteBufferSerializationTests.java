@@ -27,6 +27,7 @@ import com.twitter.serial.stream.SerializerInput;
 import com.twitter.serial.stream.SerializerOutput;
 
 import org.jetbrains.annotations.NotNull;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.EOFException;
@@ -148,6 +149,7 @@ public class ByteBufferSerializationTests {
     }
 
     @Test
+    @Ignore
     public void testSerializeString() throws Exception {
         final ByteBufferSerializerOutput output = new ByteBufferSerializerOutput();
         final String testString1 = "this is a test";
