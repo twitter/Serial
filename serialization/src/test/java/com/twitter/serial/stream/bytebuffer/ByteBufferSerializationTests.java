@@ -16,15 +16,14 @@
 
 package com.twitter.serial.stream.bytebuffer;
 
+import com.twitter.serial.SerializationTestUtils;
 import com.twitter.serial.serializer.ObjectSerializer;
 import com.twitter.serial.serializer.SerializationContext;
 import com.twitter.serial.serializer.Serializer;
-import com.twitter.serial.SerializationTestUtils;
-import com.twitter.serial.util.OptionalFieldException;
 import com.twitter.serial.stream.SerializerDefs;
-import com.twitter.serial.util.SerializationException;
 import com.twitter.serial.stream.SerializerInput;
 import com.twitter.serial.stream.SerializerOutput;
+import com.twitter.serial.util.SerializationException;
 
 import org.jetbrains.annotations.NotNull;
 import org.junit.Ignore;
