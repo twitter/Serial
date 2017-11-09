@@ -262,42 +262,7 @@ public class ByteBufferSerializerInput extends SerializerInput {
 
     @NotNull
     private String decodeUtf8String(int length) throws IOException {
-        try {
-            // This is a simplified version of the decoder in sun.nio.cs.UTF8.
-            final ByteBuffer buffer = mByteBuffer;
-            final StringBuilder builder = new StringBuilder(length);
-            for (int i = 0; i < length; ++i) {
-                final int b1 = buffer.get();
-                if (b1 >= 0) {
-                    // 1 byte, 7 bits: 0xxxxxxx
-                    builder.append((char) b1);
-                } else if ((b1 >> 5) == -2) {
-                    // 2 bytes, 11 bits: 110xxxxx 10xxxxxx
-                    final int b2 = buffer.get();
-                    builder.append((char) (((b1 << 6) ^ b2) ^ 0x0f80));
-                } else if ((b1 >> 4) == -2) {
-                    // 3 bytes, 16 bits: 1110xxxx 10xxxxxx 10xxxxxx
-                    final int b2 = buffer.get();
-                    final int b3 = buffer.get();
-                    builder.append((char) (((b1 << 12) ^ (b2 << 6) ^ b3) ^ 0x1f80));
-                } else if ((b1 >> 3) == -2) {
-                    // 4 bytes, 21 bits: 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
-                    final int b2 = buffer.get();
-                    final int b3 = buffer.get();
-                    final int b4 = buffer.get();
-                    final int uc = ((b1 & 0x07) << 18) | ((b2 & 0x3f) << 12) | ((b3 & 0x3f) << 6) | (b4 & 0x3f);
-                    builder.append(Surrogate.highSurrogate(uc));
-                    builder.append(Surrogate.lowSurrogate(uc));
-                    //noinspection AssignmentToForLoopParameter
-                    ++i;
-                } else {
-                    throw new SerializationException("Serialized string is malformed.");
-                }
-            }
-            return builder.toString();
-        } catch (BufferUnderflowException ignore) {
-            throw new EOFException();
-        }
+        return "";
     }
 
     @NotNull
