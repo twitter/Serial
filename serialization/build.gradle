@@ -29,6 +29,7 @@ repositories {
 
 dependencies {
     compile 'org.jetbrains:annotations:13.0'
+    compile 'com.squareup.okio:okio:1.13.0'
     testCompile 'org.assertj:assertj-core:2.6.0'
     testCompile 'junit:junit:4.12'
 }

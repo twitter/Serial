@@ -30,6 +30,11 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+
+import okio.Buffer;
+import okio.ByteString;
+import okio.Okio;
 
 /**
  * Custom deserialization for objects serialized by {@link ByteBufferSerializerOutput}
@@ -262,7 +267,11 @@ public class ByteBufferSerializerInput extends SerializerInput {
 
     @NotNull
     private String decodeUtf8String(int length) throws IOException {
-        return "";
+        final ByteString string = ByteString.of(mByteBuffer.array(),
+                mByteBuffer.position(),
+                length);
+        mByteBuffer.position(mByteBuffer.position() + length);
+        return string.utf8();
     }
 
     @NotNull
@@ -280,22 +289,5 @@ public class ByteBufferSerializerInput extends SerializerInput {
             chars[i] = (char) bytes[position + i];
         }
         return new String(chars);
-    }
-
-    /**
-     * These methods are copied from Character, since they are only available in API 19+.
-     */
-    private static class Surrogate {
-        private static final int MIN_HIGH_SURROGATE = '\uD800';
-        private static final int MIN_LOW_SURROGATE  = '\uDC00';
-        private static final int MIN_SUPPLEMENTARY_CODE_POINT = 0x010000;
-
-        public static char highSurrogate(int codePoint) {
-            return (char) ((codePoint >>> 10) + (MIN_HIGH_SURROGATE - (MIN_SUPPLEMENTARY_CODE_POINT >>> 10)));
-        }
-
-        public static char lowSurrogate(int codePoint) {
-            return (char) ((codePoint & 0x3ff) + MIN_LOW_SURROGATE);
-        }
     }
 }
