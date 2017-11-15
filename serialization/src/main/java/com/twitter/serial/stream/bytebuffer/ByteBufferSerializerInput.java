@@ -262,7 +262,37 @@ public class ByteBufferSerializerInput extends SerializerInput {
 
     @NotNull
     private String decodeUtf8String(int length) throws IOException {
-        return "";
+        try {
+            final ByteBuffer buffer = mByteBuffer;
+            final StringBuilder builder = new StringBuilder(length);
+            for (int i = 0; i < length; ++i) {
+                final int b1 = buffer.get();
+                if ((b1 & 0x80) >= 0) {
+                    builder.append((char) b1);
+                } else if ((b1 & 0xE0) == 0xC0) {
+                    final int b2 = buffer.get();
+                    builder.append((char) (((b1 << 6) ^ b2) ^ 0x0f80));
+                } else if ((b1 & 0xF0) == 0xE0) {
+                    final int b2 = buffer.get();
+                    final int b3 = buffer.get();
+                    builder.append((char) (((b1 << 12) ^ (b2 << 6) ^ b3) ^ 0x1f80));
+                } else if ((b1 & 0xF8) == 0xF0) {
+                    final int b2 = buffer.get();
+                    final int b3 = buffer.get();
+                    final int b4 = buffer.get();
+                    final int code = ((b1 & 0x07) << 18) | ((b2 & 0x3f) << 12) | ((b3 & 0x3f) << 6) | (b4 & 0x3f);
+                    builder.append(Surrogate.highSurrogate(code));
+                    builder.append(Surrogate.lowSurrogate(code));
+                    //noinspection AssignmentToForLoopParameter
+                    ++i;
+                } else {
+                    throw new SerializationException("Serialized string is malformed.");
+                }
+            }
+            return builder.toString();
+        } catch (BufferUnderflowException ignore) {
+            throw new EOFException();
+        }
     }
 
     @NotNull
