@@ -1,6 +1,15 @@
-language: java
+language: android
 
-jdk: 
+components:
+  - tools
+  - platform-tools
+  - tools
+  - build-tools-27.0.1
+  - android-27
+  - extra-google-m2repository
+  - extra-android-m2repository
+
+jdk:
   - oraclejdk8
 
 addons:
