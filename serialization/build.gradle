@@ -19,6 +19,7 @@
  */
 
 apply plugin: 'java'
+apply from: 'publish.gradle'
 
 sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
@@ -32,6 +33,3 @@ dependencies {
     testCompile 'org.assertj:assertj-core:2.6.0'
     testCompile 'junit:junit:4.12'
 }
-
-
-

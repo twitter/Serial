@@ -1,0 +1,40 @@
+apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'maven-publish'
+
+model {
+    publishing {
+        publications {
+            maven {
+                pom.withXml {
+                    def root = asNode()
+                    root.appendNode('name', LIBRARY_NAME)
+                    root.appendNode('description', DESCRIPTION)
+                    root.appendNode('url', WEBSITE)
+                    root.appendNode('packaging', 'jar')
+
+                    def scm = root.appendNode('scm')
+                    scm.appendNode('url', SCM_URL)
+                    scm.appendNode('connection', 'scm:' + SCM_URL)
+
+                    def license = root.appendNode('licenses').appendNode('license')
+                    license.appendNode('name', LICENSE)
+                    license.appendNode('url', LICENSE_URL)
+
+                    def developer = root.appendNode('developers').appendNode('developer')
+                    developer.appendNode('id', DEVELOPER_ID)
+                    developer.appendNode('name', DEVELOPER_NAME)
+                    developer.appendNode('url', DEVELOPER_URL)
+                }
+            }
+        }
+    }
+}
+
+publish {
+    repoName LIBRARY_NAME
+    groupId GROUP_ID
+    artifactId ARTIFACT_ID
+    publishVersion VERSION_NAME
+    desc DESCRIPTION
+    website WEBSITE
+}
