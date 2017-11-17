@@ -1,52 +1,40 @@
 apply plugin: 'com.novoda.bintray-release'
-apply plugin: 'maven'
+apply plugin: 'maven-publish'
 
-if (project.getGradle().startParameter.taskNames.any{it.contains('bintrayUpload')}) {
-    group = "com.twitter.serial"
-    version = project.VERSION_NAME
+model {
+    publishing {
+        publications {
+            maven {
+                pom.withXml {
+                    def root = asNode()
+                    root.appendNode('name', LIBRARY_NAME)
+                    root.appendNode('description', DESCRIPTION)
+                    root.appendNode('url', WEBSITE)
+                    root.appendNode('packaging', 'jar')
 
-    gradle.taskGraph.whenReady { taskGraph ->
-        taskGraph.getAllTasks().find{it.path == ":$project.name:generatePomFileForMavenPublication"}.doLast {
-            file("build/publications/maven/pom-default.xml").delete()
-            pom {
-                project {
-                    name "Serial"
-                    artifactId "serial"
-                    packaging project.name == 'compiler' ? 'jar' : 'aar'
-                    description 'Light-weight, fast framework for object serialization in Java, with Android support.'
-                    url 'https://github.com/twitter/serial'
-                    version project.VERSION_NAME
+                    def scm = root.appendNode('scm')
+                    scm.appendNode('url', SCM_URL)
+                    scm.appendNode('connection', 'scm:' + SCM_URL)
 
-                    scm {
-                        url 'git@github.com:twitter/Serial.git'
-                        connection 'scm:git:git@github.com:twitter/Serial.git'
-                    }
+                    def license = root.appendNode('licenses').appendNode('license')
+                    license.appendNode('name', LICENSE)
+                    license.appendNode('url', LICENSE_URL)
 
-                    licenses {
-                        license {
-                            name 'The Apache Software License, Version 2.0'
-                            url 'http://www.apache.org/licenses/LICENSE-2.0'
-                        }
-                    }
-
-                    developers {
-                        developer {
-                            id 'twitter'
-                            name 'Twitter'
-                            url 'https://www.twitter.com/'
-                        }
-                    }
+                    def developer = root.appendNode('developers').appendNode('developer')
+                    developer.appendNode('id', DEVELOPER_ID)
+                    developer.appendNode('name', DEVELOPER_NAME)
+                    developer.appendNode('url', DEVELOPER_URL)
                 }
-            }.writeTo("build/publications/maven/pom-default.xml")
+            }
         }
     }
 }
 
 publish {
-    repoName = 'Serial'
-    groupId = 'com.twitter.serial'
-    artifactId = 'serial'
-    publishVersion = project.VERSION_NAME
-    desc = 'Light-weight, fast framework for object serialization in Java, with Android support.'
-    website = 'https://github.com/twitter/serial'
+    repoName LIBRARY_NAME
+    groupId GROUP_ID
+    artifactId ARTIFACT_ID
+    publishVersion VERSION_NAME
+    desc DESCRIPTION
+    website WEBSITE
 }
