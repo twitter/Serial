@@ -267,6 +267,27 @@ are removing the object all together.
         return new ExampleObject(num, name);
     }
 
+Another option is to call input.peekType(), which allows you to check the type of the next field before reading the object.
+This is especially helpful if you hadn't updated the version before making a change and don't want to wipe the database,
+since it allows you to differentiate between the two versions without a version number. Note that this only works if the
+two types are different.
+
+.. code-block:: java
+
+    @Override
+    @NotNull
+    protected ExampleObject deserializeObject(@NotNull SerializerInput input, int versionNumber)
+            throws IOException, ClassNotFoundException {
+        final int num = input.readInt();
+        if (input.peekType() == SerializerDefs.TYPE_START_OBJECT) {
+            SerializationUtils.skipObject();
+            name = DEFAULT_NAME;
+        } else {
+            name = input.readString();
+        }
+        return new ExampleObject(num, name);
+    }
+
 Value Serializers
 -----------------
 Some objects are so simple that do not require support for versioning: ``Integer``, ``String``, ``Size``, ``Rect``...
