@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Sample Serial App</string>
+    <string name="create_button_text">Create random person</string>
+    <string name="age">Age</string>
+    <string name="name">Full name</string>
+</resources>
