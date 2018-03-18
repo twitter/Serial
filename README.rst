@@ -23,7 +23,7 @@ Grab the latest version via Gradle from Maven Central:
   }
 
   dependencies {
-    compile 'com.twitter.serial:serial:0.1.5'
+    compile 'com.twitter.serial:serial:0.1.6'
   }
 
 Overview
