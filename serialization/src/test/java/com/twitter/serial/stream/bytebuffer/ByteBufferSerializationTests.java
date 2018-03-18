@@ -149,7 +149,6 @@ public class ByteBufferSerializationTests {
     }
 
     @Test
-    @Ignore
     public void testSerializeString() throws Exception {
         final ByteBufferSerializerOutput output = new ByteBufferSerializerOutput();
         final String testString1 = "this is a test";

@@ -267,7 +267,7 @@ public class ByteBufferSerializerInput extends SerializerInput {
             final StringBuilder builder = new StringBuilder(length);
             for (int i = 0; i < length; ++i) {
                 final int b1 = buffer.get();
-                if ((b1 & 0x80) >= 0) {
+                if ((b1 & 0x80) == 0) {
                     builder.append((char) b1);
                 } else if ((b1 & 0xE0) == 0xC0) {
                     final int b2 = buffer.get();

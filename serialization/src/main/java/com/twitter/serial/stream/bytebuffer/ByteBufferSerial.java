@@ -16,12 +16,14 @@
 
 package com.twitter.serial.stream.bytebuffer;
 
+import com.twitter.serial.serializer.SerializationContext;
+import com.twitter.serial.serializer.Serializer;
 import com.twitter.serial.stream.Serial;
 import com.twitter.serial.stream.SerializerInput;
 import com.twitter.serial.util.InternalSerialUtils;
 import com.twitter.serial.util.Pools;
-import com.twitter.serial.serializer.SerializationContext;
-import com.twitter.serial.serializer.Serializer;
+import com.twitter.serial.util.SerializationException;
+import com.twitter.serial.util.SerializationUtils;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -106,7 +108,8 @@ public class ByteBufferSerial implements Serial {
         try {
             return serializer.deserialize(mContext, serializerInput);
         } catch (IOException | ClassNotFoundException | IllegalStateException e) {
-            throw e;
+            throw new SerializationException("Invalid serialized data:\n" +
+                    SerializationUtils.dumpSerializedData(bytes, serializerInput.getPosition(), mContext.isDebug()), e);
         }
     }
 
