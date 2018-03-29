@@ -298,13 +298,13 @@ add significant overhead. When versioning is not required, ``ValueSerializer`` i
 
   public static final Serializer<Boolean> BOOLEAN = new ValueSerializer<Boolean>() {
       @Override
-      protected void serializeValue(SerializationContext context, @NotNull SerializerOutput output, @NotNull Boolean object) throws IOException {
+      protected void serializeValue(@NotNull SerializationContext context, @NotNull SerializerOutput output, @NotNull Boolean object) throws IOException {
           output.writeBoolean(object);
       }
 
       @NotNull
       @Override
-      protected Boolean deserializeValue(SerializationContext context, @NotNull SerializerInput input) throws IOException {
+      protected Boolean deserializeValue(@NotNull SerializationContext context, @NotNull SerializerInput input) throws IOException {
           return input.readBoolean();
       }
   };
