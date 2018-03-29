@@ -50,7 +50,7 @@ To serialize an object to a byte array, use:
 
 .. code-block:: java
 
-  final Serial serial = new Serial();
+  final Serial serial = new ByteBufferSerial();
   final byte[] serializedData = serial.toByteArray(object, ExampleObject.SERIALIZER)
 
 To deserialize from a byte array back to an object, use:
@@ -86,20 +86,21 @@ For most classes, you can create a subclass of ``ObjectSerializer`` and implemen
 
       ...
 
-      private static final ExampleObjectSerializer extends ObjectSerializer<ExampleObject> {
+      private static final class ExampleObjectSerializer extends ObjectSerializer<ExampleObject> {
           @Override
-          protected void serializeObject(@NotNull SerializerOutput output,
+          protected void serializeObject(@NotNull SerializationContext context, @NotNull SerializerOutput output,
                   @NotNull ExampleObject object) throws IOException {
-              output.writeInt(object.num)
-                  .writeObject(object.obj, SubObject.SERIALIZER);
+              output
+                  .writeInt(object.num) // first field
+                  .writeObject(object.obj, SubObject.SERIALIZER); // second field
           }
 
           @Override
           @NotNull
-          protected ExampleObject deserializeObject(@NotNull SerializerInput input,
+          protected ExampleObject deserializeObject(@NotNull SerializationContext context, @NotNull SerializerInput input,
                   int versionNumber) throws IOException, ClassNotFoundException {
-              final int num = input.readInt();
-              final SubObject obj = input.readObject(SubObject.SERIALIZER);
+              final int num = input.readInt(); // first field
+              final SubObject obj = input.readObject(SubObject.SERIALIZER); // second field
               return new ExampleObject(num, obj);
           }
       }
@@ -121,11 +122,11 @@ object for that class) and ``deserializeToBuilder`` (where you populate the buil
 
       ...
 
-      public static Builder extends ModelBuilder<ExampleObject> {
+      public static class Builder extends ModelBuilder<ExampleObject> {
           ...
       }
 
-      private static final ExampleObjectSerializer extends BuilderSerializer<ExampleObject, Builder> {
+      private static final class ExampleObjectSerializer extends BuilderSerializer<ExampleObject, Builder> {
           @Override
           @NotNull
           protected Builder createBuilder() {
@@ -133,14 +134,14 @@ object for that class) and ``deserializeToBuilder`` (where you populate the buil
           }
 
           @Override
-          protected void serializeObject(@NotNull SerializerOutput output,
+          protected void serializeObject(@NotNull SerializationContext context, @NotNull SerializerOutput output,
                   @NotNull ExampleObject object) throws IOException {
               output.writeInt(object.num)
                   .writeObject(object.obj, SubObject.SERIALIZER);
           }
 
            @Override
-          protected void deserializeToBuilder(@NotNull SerializerInput input,
+          protected void deserializeToBuilder(@NotNull SerializationContext context, @NotNull SerializerInput input,
                   @NotNull Builder builder, int versionNumber) throws IOException, ClassNotFoundException {
               builder.setNum(input.readInt())
                   .setObj(input.readObject(SubObject.SERIALIZER));
@@ -204,7 +205,7 @@ you can explicitly catch the OptionalFieldException and set the remaining field(
 
       @Override
       @NotNull
-      protected ExampleObject deserializeObject(@NotNull SerializerInput input,
+      protected ExampleObject deserializeObject(@NotNull SerializationContext context, @NotNull SerializerInput input,
               int versionNumber) throws IOException, ClassNotFoundException {
           final int num = input.readInt();
           final SubObject obj = input.readObject(SubObject.SERIALIZER);
@@ -232,7 +233,7 @@ in the deserialize method you can specify what to do differently for previous ve
 
     @Override
     @NotNull
-    protected ExampleObject deserializeObject(@NotNull SerializerInput input, int versionNumber)
+    protected ExampleObject deserializeObject(@NotNull SerializationContext context, @NotNull SerializerInput input, int versionNumber)
             throws IOException, ClassNotFoundException {
         final int num = input.readInt();
         final SubObject obj = input.readObject(SubObject.SERIALIZER);
@@ -255,7 +256,7 @@ are removing the object all together.
 
     @Override
     @NotNull
-    protected ExampleObject deserializeObject(@NotNull SerializerInput input, int versionNumber)
+    protected ExampleObject deserializeObject(@NotNull SerializationContext context, @NotNull SerializerInput input, int versionNumber)
             throws IOException, ClassNotFoundException {
         final int num = input.readInt();
         if (versionNumber < 1) {
@@ -276,7 +277,7 @@ two types are different.
 
     @Override
     @NotNull
-    protected ExampleObject deserializeObject(@NotNull SerializerInput input, int versionNumber)
+    protected ExampleObject deserializeObject(@NotNull SerializationContext context, @NotNull SerializerInput input, int versionNumber)
             throws IOException, ClassNotFoundException {
         final int num = input.readInt();
         if (input.peekType() == SerializerDefs.TYPE_START_OBJECT) {
@@ -298,13 +299,13 @@ add significant overhead. When versioning is not required, ``ValueSerializer`` i
 
   public static final Serializer<Boolean> BOOLEAN = new ValueSerializer<Boolean>() {
       @Override
-      protected void serializeValue(@NotNull SerializerOutput output, @NotNull Boolean object) throws IOException {
+      protected void serializeValue(@NotNull SerializationContext context, @NotNull SerializerOutput output, @NotNull Boolean object) throws IOException {
           output.writeBoolean(object);
       }
 
       @NotNull
       @Override
-      protected Boolean deserializeValue(@NotNull SerializerInput input) throws IOException {
+      protected Boolean deserializeValue(@NotNull SerializationContext context, @NotNull SerializerInput input) throws IOException {
           return input.readBoolean();
       }
   };
