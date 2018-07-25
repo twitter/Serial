@@ -203,8 +203,9 @@ Serializer是本库中的关键类，这个类提供了序列化和反序列化�
             SerializableClass.create(ClassC.class, new ClassC.ClassCSerializer()),
             SerializableClass.create(ClassB.class, new ClassB.ClassBSerializer()));
 
-  .. 注意::
-    你这里必须new出ClassA和ClassB的serializer对象（new ClassA.ClassASerializer()、ClassB.ClassBSerializer()），而不是直接使用在ClassA和ClassB中定义的静态serializer。
+  .. 
+  注意::
+    这里必须new出ClassA和ClassB的serializer对象（new ClassA.ClassASerializer()、ClassB.ClassBSerializer()），而不是直接使用在ClassA和ClassB中定义的静态serializer。
 
 
 更新Serializers
@@ -327,12 +328,15 @@ Serializer是本库中的关键类，这个类提供了序列化和反序列化�
 
 这仅仅是 ``ObjectSerializer`` 的简单版本，它处理了 ``null`` 的情况。否则，只需将值写入到流中。
 
-.. 说明::
-  让值为null的时候``ValueSerializer``会将``null``写入到流中。这就导致第一个通过``serializeValue``写入到流中的参数（field）不能为``null``，否则就会引起歧义。在这种情况下，``ValueSerializer``会认为这是一个错误，并且抛出异常。
+.. 
+说明::
 
-.. 警告！::
-  ValueSerializers*仅仅*能被用于对象格式已知的情况下，也就是说它不能向后兼容。
-  of backwards compatibility.
+让值为null的时候 ``ValueSerializer`` 会将 ``null`` 写入到流中。这就导致第一个通过 ``serializeValue`` 写入到流中的参数（field）不能为 ``null`` ，否则就会引起歧义。在这种情况下， ``ValueSerializer`` 会认为这是一个错误，并且抛出异常。
+
+..
+警告:: 
+
+  ValueSerializers“仅仅”能被用于对象格式已知的情况下，也就是说它不能向后兼容。
 
 调试
 ---------

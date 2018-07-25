@@ -12,6 +12,8 @@
 Twitter Serial
 ==============
 
+ `中文文档 <https://github.com/twitter/Serial/blob/master/README-CHINESE.rst/>`_ 
+
 Download
 --------
 Grab the latest version via Gradle from Maven Central:
