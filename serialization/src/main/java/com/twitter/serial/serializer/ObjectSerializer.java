@@ -42,7 +42,7 @@ public abstract class ObjectSerializer<T> extends Serializer<T> {
     public static final byte NULL_OBJECT = 0;
     public static final byte NOT_NULL_OBJECT = 1;
 
-    protected final int mVersionNumber;
+    final int mVersionNumber;
 
     protected ObjectSerializer() {
         mVersionNumber = DEFAULT_VERSION;
