@@ -165,8 +165,8 @@ Serialization Utility Methods
 - In order to serialize an object as its base class, you can construct a base class serializer from the subclass's
   serializers using the getBaseClassSerializer in ``Serializers``
 
-  - For example, if you have ClassB and ClassC that both extend ClassA, and you want to serialize the objects as
-    ClassA objects, you can create a serializer in ClassA using the serializers of the subclasses:
+  - For example, if you have ClassA and ClassB that both extend ClassC, and you want to serialize the objects as
+    ClassC objects, you can create a serializer in ClassC using the serializers of the subclasses:
 
     .. code-block:: java
 

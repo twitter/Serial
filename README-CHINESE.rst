@@ -195,12 +195,12 @@ Serializer是本库中的关键类，这个类提供了序列化和反序列化�
 
 - 对于那些有基类的对象，你可以用 ``CoreSerializers`` 中的getBaseClassSerializer()，它会通过子类serializers构造出基类的serializer。
 
-  - 举个例子，比如ClassC和ClassB都继承自ClassA。你想要将当前对象序列化为ClassA的类型，你可以在ClassA中通过子类的serializer方法来建立一个SERIALIZER。
+  - 举个例子，比如ClassA和ClassB都继承自ClassC。你想要将当前对象序列化为ClassC的类型，你可以在ClassC中通过子类的serializer方法来建立一个SERIALIZER。
 
     .. code-block:: java
 
-      final Serializer<ClassA> SERIALIZER = CoreSerializers.getBaseClassSerializer(
-            SerializableClass.create(ClassC.class, new ClassC.ClassCSerializer()),
+      final Serializer<ClassC> SERIALIZER = CoreSerializers.getBaseClassSerializer(
+            SerializableClass.create(ClassA.class, new ClassA.ClassASerializer()),
             SerializableClass.create(ClassB.class, new ClassB.ClassBSerializer()));
 
   .. 
