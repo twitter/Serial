@@ -25,7 +25,7 @@ English Doc : https://github.com/twitter/Serial/blob/master/README.rst
   }
 
   dependencies {
-    compile 'com.twitter.serial:serial:0.1.6'
+    implementation 'com.twitter.serial:serial:0.1.6'
   }
  
 简介
