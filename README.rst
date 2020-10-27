@@ -25,7 +25,7 @@ Grab the latest version via Gradle from Maven Central:
   }
 
   dependencies {
-    compile 'com.twitter.serial:serial:0.1.6'
+    implementation 'com.twitter.serial:serial:0.1.6'
   }
 
 Overview
