@@ -64,18 +64,10 @@ public class LegacySerial implements Serial {
             return InternalSerialUtils.EMPTY_BYTE_ARRAY;
         }
         final ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
-        ObjectOutput objectOutput = null;
-        try {
-            objectOutput = new ObjectOutputStream(byteOutputStream);
+        try (ObjectOutput objectOutput = new ObjectOutputStream(byteOutputStream)) {
             serializer.serialize(mContext, new LegacySerializerOutput(objectOutput), value);
         } catch (IOException e) {
             throw e;
-        } finally {
-            if (objectOutput != null) {
-                try {
-                    objectOutput.close();
-                } catch (IOException ignore) { }
-            }
         }
         return byteOutputStream.toByteArray();
     }
@@ -95,18 +87,11 @@ public class LegacySerial implements Serial {
         if (bytes == null || bytes.length == 0) {
             return null;
         }
-        ObjectInputStream objectInput = null;
-        try {
-            objectInput = new ObjectInputStream(new ByteArrayInputStream(bytes));
+        try (ObjectInputStream objectInput = new ObjectInputStream(
+            new ByteArrayInputStream(bytes))) {
             return serializer.deserialize(mContext, new LegacySerializerInput(objectInput));
         } catch (IOException | ClassNotFoundException | IllegalStateException e) {
             throw e;
-        } finally {
-            if (objectInput != null) {
-                try {
-                    objectInput.close();
-                } catch (IOException ignore) { }
-            }
         }
     }
 
@@ -116,18 +101,11 @@ public class LegacySerial implements Serial {
             return InternalSerialUtils.EMPTY_BYTE_ARRAY;
         }
         final ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
-        ObjectOutput objectOutput = null;
-        try {
-            objectOutput = new ObjectOutputStream(new GZIPOutputStream(byteOutputStream));
+        try (ObjectOutput objectOutput = new ObjectOutputStream(
+            new GZIPOutputStream(byteOutputStream))) {
             serializer.serialize(mContext, new LegacySerializerOutput(objectOutput), value);
         } catch (IOException e) {
             throw e;
-        } finally {
-            if (objectOutput != null) {
-                try {
-                    objectOutput.close();
-                } catch (IOException ignore) { }
-            }
         }
         return byteOutputStream.toByteArray();
     }
@@ -139,18 +117,11 @@ public class LegacySerial implements Serial {
         if (bytes == null || bytes.length == 0) {
             return null;
         }
-        ObjectInputStream objectInput = null;
-        try {
-            objectInput = new ObjectInputStream(new GZIPInputStream(new ByteArrayInputStream(bytes)));
+        try (ObjectInputStream objectInput = new ObjectInputStream(
+            new GZIPInputStream(new ByteArrayInputStream(bytes)))) {
             return serializer.deserialize(mContext, new LegacySerializerInput(objectInput));
         } catch (IOException | ClassNotFoundException | IllegalStateException e) {
             throw e;
-        } finally {
-            if (objectInput != null) {
-                try {
-                    objectInput.close();
-                } catch (IOException ignore) { }
-            }
         }
     }
 }
