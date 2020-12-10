@@ -31,6 +31,6 @@ repositories {
 dependencies {
     compileOnly 'org.jetbrains:annotations:13.0'
     testCompileOnly 'org.jetbrains:annotations:13.0'
-    testCompile 'org.assertj:assertj-core:2.6.0'
-    testCompile 'junit:junit:4.12'
+    testImplementation 'org.assertj:assertj-core:2.6.0'
+    testImplementation 'junit:junit:4.12'
 }
