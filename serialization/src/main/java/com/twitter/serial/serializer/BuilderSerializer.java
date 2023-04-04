@@ -28,10 +28,6 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.OptionalDataException;
 
-/**
- * A base serializer for a class that has an {@link Builder}. The serialized data delimits the boundaries
- * of the object and provides basic support for versioning.
- */
 public abstract class BuilderSerializer<T, B extends Builder<T>> extends ObjectSerializer<T> {
     protected BuilderSerializer() {
     }
@@ -70,11 +66,8 @@ public abstract class BuilderSerializer<T, B extends Builder<T>> extends ObjectS
             int versionNumber)
             throws IOException, ClassNotFoundException {
         try {
-            //noinspection BlacklistedMethod
             deserializeToBuilder(context, input, builder, versionNumber);
         } catch (OptionalDataException | EOFException | OptionalFieldException ignore) {
-            // This may happen when reading optional fields. The builder should already
-            // contain all the available fields, so just ignore the exception.
         }
     }
 
@@ -85,3 +78,4 @@ public abstract class BuilderSerializer<T, B extends Builder<T>> extends ObjectS
             @NotNull SerializerInput input, @NotNull B builder, int versionNumber)
             throws IOException, ClassNotFoundException;
 }
+
